@@ -12,9 +12,9 @@ class GraphMLLoaderTest {
 
 	@Test
 	void test() {
-		GraphLoader<Vertex, Edge> loader = new GraphMLLoader();
+		GraphLoader loader = new GraphMLLoader();
     	
-    	Graph<Vertex, Edge> graph = loader.load("src/test/resources/example.graphml");
+    	Graph graph = loader.load("src/test/resources/example.graphml");
     	
     	graph.getVertices().forEach(v -> System.out.println(v.toString()));
     	graph.getEdges().forEach(e -> System.out.println(e.toString()));

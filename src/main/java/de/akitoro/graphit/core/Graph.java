@@ -3,25 +3,27 @@ package de.akitoro.graphit.core;
 import java.util.List;
 import java.util.Set;
 
-public interface Graph<V, E> {
-	Set<V> getVertices();
-	Set<E> getEdges();
+public interface Graph {
+	Set<Vertex> getVertices();
+	Set<Edge> getEdges();
 	
-	int degree(V vertex);
+	int degree(Vertex vertex);
 	
 	boolean isDirected();
 	boolean isWheighted();
 	
 	boolean isCyclic();
-	boolean isConnected(V source, V target);
-	boolean isContained(V vertex);
+	boolean isConnected(Vertex source, Vertex target);
+	boolean isContained(Vertex vertex);
 	
-	boolean add(V vertex);
-	boolean remove(V vertex);
+	boolean add(Vertex vertex);
+	boolean remove(Vertex vertex);
 	
-	boolean connect(V source, V target);
-	boolean disconnect(V source, V target);
+	boolean connect(Vertex source, Vertex target);
+	boolean disconnect(Vertex source, Vertex target);
 	
-	List<Vertex> getVertexPath(V start, V end);
-	List<Edge> getEdgePath(V start, V end);
+	List<Vertex> getVertexPath(Vertex start, Vertex end);
+	List<Edge> getEdgePath(Vertex start, Vertex end);
+	
+	Set<Vertex> getAdjacentVertices(Vertex source);
 }

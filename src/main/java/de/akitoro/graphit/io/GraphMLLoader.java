@@ -13,10 +13,10 @@ import de.akitoro.graphit.core.Edge;
 import de.akitoro.graphit.core.Graph;
 import de.akitoro.graphit.core.Vertex;
 
-public class GraphMLLoader implements GraphLoader<Vertex, Edge>{
+public class GraphMLLoader implements GraphLoader{
 
 	@Override
-	public Graph<Vertex, Edge> load(String path) {
+	public Graph load(String path) {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder builder = factory.newDocumentBuilder();
@@ -59,7 +59,7 @@ public class GraphMLLoader implements GraphLoader<Vertex, Edge>{
 	}
 
 	@Override
-	public void save(Graph<Vertex, Edge> graph) {
+	public void save(Graph graph) {
 		// TODO Auto-generated method stub
 	}
 }

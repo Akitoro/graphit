@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class AdjacencyGraph implements Graph<Vertex, Edge>{
+public class AdjacencyGraph implements Graph{
 	
 	public final boolean isDirected;
 	
@@ -62,9 +62,11 @@ public class AdjacencyGraph implements Graph<Vertex, Edge>{
 		if (source.equals(target)) {
 			return false;
 		}
-		if (!this.isContained(source) || !this.isContained(target)) {
-			return false;
-		}
+		this.adjacency.putIfAbsent(source, new HashSet<Vertex>());
+		this.adjacency.putIfAbsent(target, new HashSet<Vertex>());
+//		if (!this.isContained(source) || !this.isContained(target)) {
+//			return false;
+//		}
 		this.adjacency.get(source).add(target);
 		if (!this.isDirected()) {
 			this.adjacency.get(target).add(source);
@@ -98,8 +100,7 @@ public class AdjacencyGraph implements Graph<Vertex, Edge>{
 
 	@Override
 	public boolean isConnected(Vertex source, Vertex target) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.adjacency.get(source).contains(target);
 	}
 
 	@Override
@@ -132,6 +133,11 @@ public class AdjacencyGraph implements Graph<Vertex, Edge>{
 			return 0;
 		}
 		return this.adjacency.get(vertex).size();
+	}
+
+	@Override
+	public Set<Vertex> getAdjacentVertices(Vertex source) {
+		return this.adjacency.get(source);
 	}
 
 	

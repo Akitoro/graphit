@@ -8,9 +8,17 @@
     <node id="B"/>
     <node id="C"/>
     <node id="D"/>
+    <node id="E"/>
+    <node id="F"/>
+    <node id="G"/>
     <edge id="ab" source="A" target="B"/>
-    <edge id="bc" source="B" target="C"/>
+    <edge id="ac" source="A" target="C"/>
     <edge id="cd" source="C" target="D"/>
-    <edge id="da" source="D" target="A"/>
+    <edge id="bd" source="B" target="D"/>
+    <edge id="bg" source="B" target="G"/>
+    <edge id="ce" source="C" target="E"/>
+    <edge id="ef" source="E" target="F"/>
+    <edge id="df" source="D" target="F"/>
+    <edge id="fg" source="F" target="G"/>
   </graph>
 </graphml>

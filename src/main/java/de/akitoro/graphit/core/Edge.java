@@ -7,6 +7,7 @@ public class Edge {
 	private final Vertex source;
 	private final Vertex target;
 	private final boolean isDirected;
+	private final double wheight;
 	
 	public Properties properties = new Properties();
 	
@@ -14,6 +15,7 @@ public class Edge {
 		this.source = source;
 		this.target = target;
 		this.isDirected = false;
+		this.wheight = 1;
 	}
 	
 	public Vertex getSource() {
@@ -22,6 +24,10 @@ public class Edge {
 	
 	public Vertex getTarget() {
 		return target;
+	}
+	
+	public boolean getIsDirected() {
+		return isDirected;
 	}
 	
 	@Override

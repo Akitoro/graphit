@@ -13,9 +13,9 @@ public abstract class ForceDirectedDrawer implements Drawable{
 	
 	protected double desiredLength = 1;
 	
-	private double epsilon = 0.2;
+	private double epsilon = 0.1;
 	
-	private int maxTime = 1000;
+	private int maxTime = 500;
 	
 	protected double delta(int time) {
 		return Math.pow(0.99, time);
@@ -86,9 +86,7 @@ public abstract class ForceDirectedDrawer implements Drawable{
 				positions.put(v, nextPosition);
 			}
 			t++;
-		}
-		System.out.print(t);
-		
+		}	
 		return positions;
 	}
 	

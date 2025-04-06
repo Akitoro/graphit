@@ -1,15 +1,19 @@
 package de.akitoro.graphit.core;
 
+import java.util.Set;
+
 public class Edge {
 	
 	private final Vertex source;
 	private final Vertex target;
+	private final boolean isDirected;
 	
 	public Properties properties = new Properties();
 	
 	public Edge(Vertex source, Vertex target) {
 		this.source = source;
 		this.target = target;
+		this.isDirected = false;
 	}
 	
 	public Vertex getSource() {
@@ -27,7 +31,16 @@ public class Edge {
 		}
 		else if(obj instanceof Edge) {
 			Edge other = (Edge) obj;
-			return other.source.equals(this.source) && other.target.equals(this.target);
+			if (this.isDirected && other.isDirected) {
+				return other.source.equals(this.source) && other.target.equals(this.target);
+			}
+			else if (!this.isDirected && !other.isDirected) {
+				Set<Vertex> a = Set.of(this.source, this.target);
+				Set<Vertex> b = Set.of(other.source, other.target);
+				
+				return a.equals(b);
+			}
+			
 		}
 		return false;
 	}

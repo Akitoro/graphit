@@ -12,7 +12,6 @@ public class Vec2 {
 	
 	public static Vec2 ZERO = new Vec2(0, 0);
 	
-	
 	public Vec2(double x, double y) {
 		this.x = x;
 		this.y = y;
@@ -67,5 +66,17 @@ public class Vec2 {
 	@Override
 	public String toString() {
 		return String.format("(%.2f; %.2f)", this.x, this.y);
+	}
+	
+	public Vec2 toPolar() {
+		return new Vec2(Math.atan2(x, y), Math.hypot(x, y));
+	}
+	
+	public Vec2 toCartesian() {
+		return new Vec2(this.y * Math.cos(this.x), this.y * Math.sin(this.x));
+	}
+	
+	public Vec2 orthogonal() {
+		return new Vec2(this.y, -this.x);
 	}
 }

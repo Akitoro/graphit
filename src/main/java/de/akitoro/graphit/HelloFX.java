@@ -12,12 +12,15 @@ import de.akitoro.graphit.core.Edge;
 import de.akitoro.graphit.core.Graph;
 import de.akitoro.graphit.core.Vertex;
 import de.akitoro.graphit.draw.Drawable;
+import de.akitoro.graphit.draw.circular.CircularDrawer;
 import de.akitoro.graphit.draw.forcedirected.EadesDrawer;
 import de.akitoro.graphit.io.GraphLoader;
 import de.akitoro.graphit.io.GraphMLLoader;
 import de.akitoro.graphit.math.Mat2x2;
+import de.akitoro.graphit.math.Ray;
 import de.akitoro.graphit.math.Vec2;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -25,6 +28,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.FillRule;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 
@@ -46,10 +52,23 @@ public class HelloFX extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         
         GraphLoader loader = new GraphMLLoader();
+        
+      //Creating a Polygon 
+        Polygon polygon = new Polygon();  
+         
+        //Adding coordinates to the polygon 
+        polygon.getPoints().addAll(new Double[]{ 
+           300.0, 50.0, 
+           450.0, 150.0, 
+           300.0, 250.0, 
+           150.0, 150.0, 
+        });
+        
+        Group root = new Group(polygon); 
     	
     	Graph graph = loader.load("src/test/resources/example.graphml");
         
-        drawGraph(graph, gc);
+        drawGraph(completeGraph(5), gc);
         
         
         Scene scene = new Scene(pane, 640, 480);
@@ -69,7 +88,10 @@ public class HelloFX extends Application {
     
     public void drawGraph(Graph graph, GraphicsContext gc) {
     	Drawable eades = new EadesDrawer();
+    	Drawable circular = new CircularDrawer(20, -2*Math.PI/5);
+    	
     	Map<Vertex, Vec2> mapping = eades.draw(graph);
+    	mapping = circular.draw(graph);
     	
     	Collection<Vec2> positions = mapping.values();
 
@@ -100,7 +122,23 @@ public class HelloFX extends Application {
         for (Edge e : graph.getEdges()) {
         	Vec2 start = scaleMatrix.apply(mapping.get(e.getSource()).sub(offset)).add(lastOffset);
         	Vec2 end = scaleMatrix.apply(mapping.get(e.getTarget()).sub(offset)).add(lastOffset);
+        	
+        	Vec2 base = end.sub(start);
+        	Vec2 real = end.sub(base.normalize().mul(20));
+        	
+        	
         	gc.setLineWidth(5);
+        	gc.setFill(Color.RED);
+        	
+        	Ray r = new Ray(real, base.orthogonal().normalize());
+        	
+        	Vec2 a = r.get(-4);
+        	Vec2 b = r.get(4);
+        	
+        	gc.fillPolygon(new double[] {end.x, a.x, b.x}, new double[] {end.y, a.y, b.y}, 3);
+        	
+        	gc.setLineWidth(2);
+        	gc.setFill(Color.BLACK);
 			gc.strokeLine(start.x, start.y, end.x, end.y);
 		}
     }
